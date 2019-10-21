@@ -30,6 +30,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -609,7 +610,7 @@ public class ClientReadPlatformServiceImpl implements ClientReadPlatformService 
 	            		 }
 	            		 
 	            	 }
-	            	 else if(familyDetail==128||familyDetail==129)
+	            	 else if(familyDetail==128||familyDetail==129||familyDetail==131||familyDetail==96)
 	            	 {
 	            		 clientRow.createCell(15).setCellValue(fdetail.getName());
 	            		 
@@ -621,17 +622,27 @@ public class ClientReadPlatformServiceImpl implements ClientReadPlatformService 
 	            		 {
 	            			 clientRow.createCell(16).setCellValue("K06");
 	            		 }
+	            		 else if(familyDetail==131)
+	            		 {
+	            			 clientRow.createCell(16).setCellValue("K01");
+	            		 }
+	            		 else if(familyDetail==96)
+	            		 {
+	            			 clientRow.createCell(16).setCellValue("K03");
+	            		 }
+	            		 
 	            		 flag =1;
 	            	 }
 	            	 else
 	            	 {
 	            		 clientRow.createCell(fdc).setCellValue(fdetail.getName());
 	            		 	
-	            			 if(fdetail.getRelationType()==96) 
+	            			 /*if(fdetail.getRelationType()==96) 
 	            			 {
 	            				 clientRow.createCell(fdc+1).setCellValue("K03"); //Mother 
 	            			 }
-	            			 else if(fdetail.getRelationType()==97) 
+	            			 else*/ 
+	            		 	 if(fdetail.getRelationType()==97) 
 	            			 {
 	            				 clientRow.createCell(fdc+1).setCellValue("K04");
 	            			 }
@@ -643,10 +654,10 @@ public class ClientReadPlatformServiceImpl implements ClientReadPlatformService 
 	            			 {
 	            				 clientRow.createCell(fdc+1).setCellValue("K07"); //Brother
 	            			 }
-	            			 else if(fdetail.getRelationType()==131) 
+	            			 /*else if(fdetail.getRelationType()==131) 
 	            			 {
 	            				 clientRow.createCell(fdc+1).setCellValue("K01"); //Father
-	            			 }
+	            			 }*/
 	            			 else if(fdetail.getRelationType()==133) 
 	            			 {
 	            				 clientRow.createCell(fdc+1).setCellValue("K08"); //Mother-In-Law
@@ -827,17 +838,27 @@ public class ClientReadPlatformServiceImpl implements ClientReadPlatformService 
         	
         	clientRow.createCell(38).setCellValue("P03"); //Habile added from equifax report 
         	clientRow.createCell(39).setCellValue(clientobj.getMobileNo());
+        	Integer agevalue = new Integer(clientobj.getNomineeAge());
         	
         	if(clientobj.getNomineeDOB()!=null && clientobj.getLoanDisburedonDate()!=null)
         	{
-        		int year=clientobj.getNomineeDOB().getYear();
-        		int year1=clientobj.getLoanDisburedonDate().getYear();
+        		Date byear=clientobj.getNomineeDOB();
+        		Calendar calendar = new GregorianCalendar();
+        		calendar.setTime(byear);
+        		int year = calendar.get(Calendar.YEAR);
+        		Date nyear=clientobj.getLoanDisburedonDate();
+        		Calendar calendarr = new GregorianCalendar();
+        		calendarr.setTime(nyear);
+        		int year1 = calendarr.get(Calendar.YEAR);
+//        		int year=clientobj.getNomineeDOB().getYear();
+//        		int year1=clientobj.getLoanDisburedonDate().getYear();
         		int diffyear=year1-year;
         		clientRow.createCell(27).setCellValue(diffyear);
-        	}else if(clientobj.getNomineeAge()!=0)
+        	}else if(agevalue!=null)
         	{
         		clientRow.createCell(27).setCellValue(clientobj.getNomineeAge());
         	}
+    
         		
         	
         	
@@ -1505,7 +1526,7 @@ public class ClientReadPlatformServiceImpl implements ClientReadPlatformService 
 	            			 clientRow.createCell(16).setCellValue("K06");
 	            		 }
 	            	 }
-	            	 else if(familyDetail==128||familyDetail==129)
+	            	 else if(familyDetail==128||familyDetail==129||familyDetail==131||familyDetail==96)
 	            	 {
 	            		 clientRow.createCell(15).setCellValue(fdetail.getName());
 	            		 
@@ -1517,17 +1538,26 @@ public class ClientReadPlatformServiceImpl implements ClientReadPlatformService 
 	            		 {
 	            			 clientRow.createCell(16).setCellValue("K06");
 	            		 }
+	            		 else if(familyDetail==131)
+	            		 {
+	            			 clientRow.createCell(16).setCellValue("K01");
+	            		 }
+	            		 else if(familyDetail==96)
+	            		 {
+	            			 clientRow.createCell(16).setCellValue("K03");
+	            		 }
 	            		 flag=1;
 	            	 }
 	            	 else
 	            	 {
 	            		 clientRow.createCell(fdc).setCellValue(fdetail.getName());
 	            		 
-	            			 if(fdetail.getRelationType()==96) 
+	            			 /*if(fdetail.getRelationType()==96) 
 	            			 {
 	            				 clientRow.createCell(fdc+1).setCellValue("K03");
 	            			 }
-	            			 else if(fdetail.getRelationType()==97) 
+	            			 else*/ 
+	            		     if(fdetail.getRelationType()==97) 
 	            			 {
 	            				 clientRow.createCell(fdc+1).setCellValue("K04");
 	            			 }
@@ -1539,10 +1569,10 @@ public class ClientReadPlatformServiceImpl implements ClientReadPlatformService 
 	            			 {
 	            				 clientRow.createCell(fdc+1).setCellValue("K07");
 	            			 }
-	            			 else if(fdetail.getRelationType()==131) 
+	            			 /*else if(fdetail.getRelationType()==131) 
 	            			 {
 	            				 clientRow.createCell(fdc+1).setCellValue("K01"); // Father
-	            			 }
+	            			 }*/
 	            			 else if(fdetail.getRelationType()==133) 
 	            			 {
 	            				 clientRow.createCell(fdc+1).setCellValue("K08"); //Mother-In-Law
@@ -1727,7 +1757,7 @@ public class ClientReadPlatformServiceImpl implements ClientReadPlatformService 
         	{
         		clientRow.createCell(27).setCellValue(clientobj.getNomineeAge());
         	}*/
-        	if(clientobj.getNomineeDOB()!=null && clientobj.getLoanDisburedonDate()!=null)
+        	/*if(clientobj.getNomineeDOB()!=null && clientobj.getLoanDisburedonDate()!=null)
         	{
         		int year=clientobj.getNomineeDOB().getYear();
         		int year1=clientobj.getLoanDisburedonDate().getYear();
@@ -1736,11 +1766,32 @@ public class ClientReadPlatformServiceImpl implements ClientReadPlatformService 
         	}else if(clientobj.getNomineeAge()!=0)
         	{
         		clientRow.createCell(27).setCellValue(clientobj.getNomineeAge());
+        	}*/
+        	Integer agevalue = new Integer(clientobj.getNomineeAge());
+        	
+        	if(clientobj.getNomineeDOB()!=null && clientobj.getLoanDisburedonDate()!=null)
+        	{
+        		Date byear=clientobj.getNomineeDOB();
+        		Calendar calendar = new GregorianCalendar();
+        		calendar.setTime(byear);
+        		int year = calendar.get(Calendar.YEAR);
+        		Date nyear=clientobj.getLoanDisburedonDate();
+        		Calendar calendarr = new GregorianCalendar();
+        		calendarr.setTime(nyear);
+        		int year1 = calendarr.get(Calendar.YEAR);
+//        		int year=clientobj.getNomineeDOB().getYear();
+//        		int year1=clientobj.getLoanDisburedonDate().getYear();
+        		int diffyear=year1-year;
+        		clientRow.createCell(27).setCellValue(diffyear);
+        	}else if(agevalue!=null)
+        	{
+        		clientRow.createCell(27).setCellValue(clientobj.getNomineeAge());
         	}
+    
         	
         	
         	
-}  	
+ }  	
         	
 //        	edit 2 nd sheet end
         	
